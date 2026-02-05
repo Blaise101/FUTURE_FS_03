@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navLinks = [
@@ -7,6 +7,9 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
   const cartCount = 0;
@@ -17,7 +20,7 @@ export default function Navbar() {
         <div className="flex justify-between h-20 items-center">
           <div className="flex-shrink-0 flex items-center">
             <button
-              // to="/"
+              onClick={() => navigate("/")}
               className="text-2xl font-bold tracking-widest cursor-pointer uppercase text-[#1A1A1A] serif"
             >
               Luna Thread
@@ -29,7 +32,7 @@ export default function Navbar() {
               {navLinks.map((link) => (
                 <button
                   key={link.name}
-                  // to={link.path}
+                  onClick={() => navigate(link.path)}
                   className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors duration-200 ${
                     isActive(link.path)
                       ? "text-[#C5A59E] border-b-2 border-[#C5A59E]"

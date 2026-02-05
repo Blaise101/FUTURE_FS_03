@@ -2,22 +2,27 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import ProductDetails from "./components/home/partials/ProductDetails";
 
 export default function Layout() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Router>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
           <Routes>
             <Route
               path="/"
               element={<Home />}
             />
+            <Route
+              path="/product/:id"
+              element={<ProductDetails />}
+            />
           </Routes>
-        </Router>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
