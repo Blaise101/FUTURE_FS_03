@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductDetails from "./components/home/partials/ProductDetails";
+import Shop from "./pages/Shop";
 
 export default function Layout() {
   return (
@@ -14,6 +15,10 @@ export default function Layout() {
             <Route
               path="/"
               element={<Home />}
+            />
+            <Route
+              path="/shop"
+              element={<Shop />}
             />
             <Route
               path="/product/:id"
