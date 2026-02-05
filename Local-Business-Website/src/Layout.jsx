@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductDetails from "./components/home/partials/ProductDetails";
 import Shop from "./pages/Shop";
+import About from "./pages/About";
 
 export default function Layout() {
   return (
@@ -23,6 +24,10 @@ export default function Layout() {
             <Route
               path="/product/:id"
               element={<ProductDetails />}
+            />
+            <Route
+              path="/about"
+              element={<About />}
             />
           </Routes>
         </main>

@@ -1,4 +1,5 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { HiOutlineShoppingBag } from "react-icons/hi";
 
 export default function Navbar() {
   const navLinks = [
@@ -47,19 +48,7 @@ export default function Navbar() {
             {/* Shopping Bag Icon */}
             <button className="relative p-2 text-gray-600 hover:text-[#C5A59E] transition-colors">
               <span className="sr-only">View shopping bag</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
+              <HiOutlineShoppingBag className="h-6 w-6" />
               {cartCount > 0 && (
                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-[10px] font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-[#C5A59E] rounded-full">
                   {cartCount}
