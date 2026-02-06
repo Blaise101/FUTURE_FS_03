@@ -9,6 +9,8 @@ import Contact from "./pages/Contact";
 import { ContactProvider } from "./assets/contexts/ContactProvider";
 import { AuthProvider } from "./assets/contexts/AuthProvider";
 import Login from "./pages/Login";
+import Dashboard from "./pages/auth/Dashboard";
+import AdminLayout from "./AuthLayout";
 
 const PublicLayout = ({ children }) => {
   return (
@@ -70,6 +72,15 @@ export default function Layout() {
                 </PublicLayout>
               }
             />
+            <Route
+              path="/admin"
+              element={<AdminLayout />}
+            >
+              <Route
+                path="/admin/dashboard"
+                element={<Dashboard />}
+              />
+            </Route>
           </Routes>
         </Router>
       </AuthProvider>
