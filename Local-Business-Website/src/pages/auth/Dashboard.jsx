@@ -30,7 +30,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <header>
         <h1 className="text-3xl font-bold serif">
           Welcome back, {user?.name.split(" ")[0]}
