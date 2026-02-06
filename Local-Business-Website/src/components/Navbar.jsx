@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { CiUser } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
 
 export default function Navbar() {
   const navLinks = [
@@ -8,6 +10,8 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
+
+  const { isAuthenticated } = false;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,17 +48,27 @@ export default function Navbar() {
                 </button>
               ))}
             </div>
-
-            {/* Shopping Bag Icon */}
-            <button className="relative p-2 text-gray-600 hover:text-[#C5A59E] transition-colors">
-              <span className="sr-only">View shopping bag</span>
-              <HiOutlineShoppingBag className="h-6 w-6" />
-              {cartCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-[10px] font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-[#C5A59E] rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </button>
+            <div className="flex items-center space-x-4 border-l border-gray-100 pl-8">
+              <button
+                onClick={() =>
+                  navigate(isAuthenticated ? "/admin/dashboard" : "/login")
+                }
+                className="p-2 text-gray-600 hover:text-[#C5A59E] transition-colors"
+                title={isAuthenticated ? "Admin Dashboard" : "Sign In"}
+              >
+                <FaRegUser className="h-5 w-5" />
+              </button>
+              {/* Shopping Bag Icon */}
+              <button className="relative p-2 text-gray-600 hover:text-[#C5A59E] transition-colors">
+                <span className="sr-only">View shopping bag</span>
+                <HiOutlineShoppingBag className="h-6 w-6" />
+                {cartCount > 0 && (
+                  <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-[10px] font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-[#C5A59E] rounded-full">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
