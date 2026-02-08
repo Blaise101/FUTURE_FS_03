@@ -5,7 +5,7 @@ import { useAuth } from "../assets/contexts/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("admin@lunathread.com");
-  const [password, setPassword] = useState("password");
+  const [password, setPassword] = useState("wearetheones");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();

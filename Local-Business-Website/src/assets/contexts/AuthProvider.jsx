@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const login = async (email, password) => {
-    if (email === "admin@lunathread.com" && password === "password") {
+    if (email === "admin@lunathread.com" && password === "wearetheones") {
       setIsAuthenticated(true);
       setUser({ name: "Blaise Admin", email });
       return true;

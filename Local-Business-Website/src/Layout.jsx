@@ -11,6 +11,8 @@ import { AuthProvider } from "./assets/contexts/AuthProvider";
 import Login from "./pages/Login";
 import Dashboard from "./pages/auth/Dashboard";
 import AdminLayout from "./AuthLayout";
+import Products from "./pages/auth/Products";
+import { ProductProvider } from "./assets/contexts/ProductProvider";
 
 const PublicLayout = ({ children }) => {
   return (
@@ -26,63 +28,69 @@ export default function Layout() {
   return (
     <ContactProvider>
       <AuthProvider>
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PublicLayout>
-                  <Home />
-                </PublicLayout>
-              }
-            />
-            <Route
-              path="/login"
-              element={<Login />}
-            />
-            <Route
-              path="/shop"
-              element={
-                <PublicLayout>
-                  <Shop />
-                </PublicLayout>
-              }
-            />
-            <Route
-              path="/product/:id"
-              element={
-                <PublicLayout>
-                  <ProductDetails />
-                </PublicLayout>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <PublicLayout>
-                  <About />
-                </PublicLayout>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <PublicLayout>
-                  <Contact />
-                </PublicLayout>
-              }
-            />
-            <Route
-              path="/admin"
-              element={<AdminLayout />}
-            >
+        <ProductProvider>
+          <Router>
+            <Routes>
               <Route
-                path="/admin/dashboard"
-                element={<Dashboard />}
+                path="/"
+                element={
+                  <PublicLayout>
+                    <Home />
+                  </PublicLayout>
+                }
               />
-            </Route>
-          </Routes>
-        </Router>
+              <Route
+                path="/login"
+                element={<Login />}
+              />
+              <Route
+                path="/shop"
+                element={
+                  <PublicLayout>
+                    <Shop />
+                  </PublicLayout>
+                }
+              />
+              <Route
+                path="/product/:id"
+                element={
+                  <PublicLayout>
+                    <ProductDetails />
+                  </PublicLayout>
+                }
+              />
+              <Route
+                path="/about"
+                element={
+                  <PublicLayout>
+                    <About />
+                  </PublicLayout>
+                }
+              />
+              <Route
+                path="/contact"
+                element={
+                  <PublicLayout>
+                    <Contact />
+                  </PublicLayout>
+                }
+              />
+              <Route
+                path="/admin"
+                element={<AdminLayout />}
+              >
+                <Route
+                  path="/admin/dashboard"
+                  element={<Dashboard />}
+                />
+                <Route
+                  path="/admin/products"
+                  element={<Products />}
+                />
+              </Route>
+            </Routes>
+          </Router>
+        </ProductProvider>
       </AuthProvider>
     </ContactProvider>
   );
