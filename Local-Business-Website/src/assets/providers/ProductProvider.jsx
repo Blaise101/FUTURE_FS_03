@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { products as PRODUCTS } from "../constants/products";
-import { ProductContext } from "./ProductContext";
+import { ProductContext } from "../contexts/ProductContext";
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState(PRODUCTS);

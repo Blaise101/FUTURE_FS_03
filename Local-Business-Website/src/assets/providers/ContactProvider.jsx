@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ContactContext } from "./ContactContext";
+import { ContactContext } from "../contexts/ContactContext";
 
 export const ContactProvider = ({ children }) => {
   const [messages, setMessages] = useState([

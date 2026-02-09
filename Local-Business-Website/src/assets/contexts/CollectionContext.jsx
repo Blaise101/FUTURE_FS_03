@@ -5,9 +5,7 @@ export const CollectionContext = createContext();
 export const useCollection = () => {
   const context = useContext(CollectionContext);
   if (context === undefined) {
-    throw new Error(
-      "useCoollection must be used within an CoollectionProvider",
-    );
+    throw new Error("useCollection must be used within an CollectionProvider");
   }
   return context;
 };

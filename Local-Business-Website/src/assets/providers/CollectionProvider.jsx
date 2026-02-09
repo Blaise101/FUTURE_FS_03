@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CollectionContext } from "./CollectionContext";
+import { CollectionContext } from "../contexts/CollectionContext";
 
 export const CollectionProvider = ({ children }) => {
   const [collections, setCollections] = useState([
