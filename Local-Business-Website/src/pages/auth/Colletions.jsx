@@ -8,12 +8,14 @@ export default function Collections() {
     setIsEditing(true);
   };
   const [currentCol, setCurrentCol] = useState(null);
-  const handleSubmit = () => {};
+  const { collections, deleteCollection, updateCollection } = useCollection();
+  const handleSubmit = () => {
+    updateCollection();
+  };
   const setNewState = () => {
     setCurrentCol(null);
     setIsEditing(false);
   };
-  const { collections, deleteCollection } = useCollection();
   const handleEdit = (col) => {
     setCurrentCol(col);
     setIsEditing(true);

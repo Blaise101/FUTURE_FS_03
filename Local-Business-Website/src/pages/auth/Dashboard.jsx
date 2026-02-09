@@ -1,10 +1,12 @@
 import { useAuth } from "../../assets/contexts/AuthContext";
-import { products } from "../../assets/constants/products";
 import { useContact } from "../../assets/contexts/ContactContext";
+import { useProduct } from "../../assets/contexts/ProductContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { messages } = useContact();
+  const { products } = useProduct();
   const unreadMessages = messages.filter((message) => !message.read).length;
 
   const stats = [
@@ -28,6 +30,15 @@ export default function Dashboard() {
       color: "bg-purple-50",
     },
   ];
+
+  const quickActions = [
+    { icon: "➕", label: "New Product", path: "/admin/products" },
+    { icon: "📁", label: "Collections", path: "/admin/collections" },
+    { icon: "🏷️", label: "Discounts", path: "/admin/products" },
+    { icon: "✉️", label: "Messages", path: "/admin/messages" },
+  ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-8">
@@ -97,22 +108,15 @@ export default function Dashboard() {
         <div className="bg-white p-8 border border-gray-100 rounded-sm">
           <h2 className="text-xl font-bold serif mb-6">Quick Actions</h2>
           <div className="grid grid-cols-2 gap-4">
-            <button className="p-4 border border-gray-100 rounded-sm hover:bg-gray-50 text-left transition-colors">
-              <span className="block text-lg mb-2">➕</span>
-              <span className="text-sm font-bold">New Product</span>
-            </button>
-            <button className="p-4 border border-gray-100 rounded-sm hover:bg-gray-50 text-left transition-colors">
-              <span className="block text-lg mb-2">📁</span>
-              <span className="text-sm font-bold">Collections</span>
-            </button>
-            <button className="p-4 border border-gray-100 rounded-sm hover:bg-gray-50 text-left transition-colors">
-              <span className="block text-lg mb-2">🏷️</span>
-              <span className="text-sm font-bold">Discounts</span>
-            </button>
-            <button className="p-4 border border-gray-100 rounded-sm hover:bg-gray-50 text-left transition-colors">
-              <span className="block text-lg mb-2">✉️</span>
-              <span className="text-sm font-bold">Messages</span>
-            </button>
+            {quickActions.map((action) => (
+              <button
+                onClick={() => navigate(action.path)}
+                className="p-4 border border-gray-100 rounded-sm hover:bg-gray-50 text-left transition-colors"
+              >
+                <span className="block text-lg mb-2">{action.icon}</span>
+                <span className="text-sm font-bold">{action.label}</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>

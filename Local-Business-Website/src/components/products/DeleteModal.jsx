@@ -1,9 +1,11 @@
 import { IoSkullOutline } from "react-icons/io5";
+import { useProduct } from "../../assets/contexts/ProductContext";
 
-export default function DeleteModal({ onCancel, product, onDelete }) {
+export default function DeleteModal({ onCancel, product }) {
+  const { deleteProduct } = useProduct();
   const deleteItem = () => {
+    deleteProduct(product.id);
     onCancel();
-    onDelete(product.id);
   };
 
   return (

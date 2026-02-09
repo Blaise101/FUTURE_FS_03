@@ -65,7 +65,7 @@ export const MessageProvider = ({ children }) => {
   };
 
   const deleteMessage = (id) => {
-    setMessages(messages.filter((messaage) => messaage.id !== id));
+    setMessages(messages.filter((message) => message.id !== id));
   };
 
   return (

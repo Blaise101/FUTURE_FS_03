@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
 
-export default function ProductTable({ products, onEdit, onDelete }) {
+export default function ProductTable({ products, onEdit }) {
   const [deleteProduct, setDeleteProduct] = useState(false);
   const [productTodelete, setProductToDelete] = useState(null);
   const handleDelete = (product) => {
@@ -19,7 +19,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
           <DeleteModal
             onCancel={handleCancelDelete}
             product={productTodelete}
-            onDelete={onDelete}
           />
         </div>
       )}
