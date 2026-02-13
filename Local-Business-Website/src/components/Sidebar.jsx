@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../assets/contexts/AuthContext";
+import { useState } from "react";
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
-  const handleLogout = () => {
-    logout();
-    navigate("/admin/login");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await logout();
+    navigate("/login", { replace: true });
   };
   const links = [
     { name: "Dashboard", path: "/admin/dashboard", icon: "📊" },
@@ -13,7 +19,6 @@ export default function Sidebar() {
     { name: "Collections", path: "/admin/collections", icon: "📁" },
     { name: "Messages", path: "/admin/messages", icon: "✉️" },
   ];
-  const navigate = useNavigate();
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
@@ -61,10 +66,20 @@ export default function Sidebar() {
       <div className="p-4 border-t border-gray-100">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-md transition-colors"
+          disabled={loading}
+          className="w-full disabled:border-red-300 disabled:pointer-events-none flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-md transition-colors"
         >
-          <span>🚪</span>
-          Logout
+          {!loading ? (
+            <>
+              <span>🚪</span>
+              Logout
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-red-300 border-t-red-500 rounded-full animate-spin" />
+              <span>Signing out...</span>
+            </div>
+          )}
         </button>
       </div>
     </div>

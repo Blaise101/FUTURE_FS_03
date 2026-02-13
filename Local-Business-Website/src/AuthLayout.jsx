@@ -3,9 +3,9 @@ import { useAuth } from "./assets/contexts/AuthContext";
 import Sidebar from "./components/Sidebar";
 
 export default function AuthLayout() {
-  const { isAuthenticated } = useAuth();
+  const { token } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!token) {
     return <Navigate to="/login" />;
   }
 

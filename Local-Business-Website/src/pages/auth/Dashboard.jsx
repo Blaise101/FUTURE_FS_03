@@ -54,7 +54,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
           <div
-            key={stat.label}
+            key={stat.icon}
             className={`${stat.color} p-6 rounded-sm border border-gray-100 flex items-center gap-6`}
           >
             <div className="text-3xl">{stat.icon}</div>
