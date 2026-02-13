@@ -1,12 +1,10 @@
 import { useState } from "react";
 import ProductTable from "../../components/products/ProductTable";
 import ProductForm from "../../components/products/ProductForm";
-import { useProduct } from "../../assets/contexts/ProductContext";
 
 export default function Products() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const { products } = useProduct();
   const handleAddNew = () => {
     setCurrentProduct({
       name: "",
@@ -50,12 +48,7 @@ export default function Products() {
         />
       )}
 
-      {!isEditing && (
-        <ProductTable
-          products={products}
-          onEdit={handleEdit}
-        />
-      )}
+      {!isEditing && <ProductTable onEdit={handleEdit} />}
     </div>
   );
 }

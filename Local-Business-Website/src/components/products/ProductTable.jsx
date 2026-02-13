@@ -1,7 +1,8 @@
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
+import { useProduct } from "../../assets/contexts/ProductContext";
 
-export default function ProductTable({ products, onEdit }) {
+export default function ProductTable({ onEdit }) {
   const [deleteProduct, setDeleteProduct] = useState(false);
   const [productTodelete, setProductToDelete] = useState(null);
   const handleDelete = (product) => {
@@ -11,6 +12,7 @@ export default function ProductTable({ products, onEdit }) {
   const handleCancelDelete = () => {
     setDeleteProduct(false);
   };
+  const { products } = useProduct();
 
   return (
     <>
@@ -42,7 +44,7 @@ export default function ProductTable({ products, onEdit }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {products.map((product) => (
+              {products.map((product, index) => (
                 <tr
                   key={product.id}
                   className="hover:bg-gray-50 transition-colors group"
@@ -50,15 +52,13 @@ export default function ProductTable({ products, onEdit }) {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
                       <img
-                        src={product.image}
+                        src={`http://localhost:8000/${product.image}`}
                         alt=""
                         className="w-12 h-16 object-cover rounded-sm"
                       />
                       <div>
                         <p className="font-semibold text-sm">{product.name}</p>
-                        <p className="text-xs text-gray-400">
-                          ID: {product.id}
-                        </p>
+                        <p className="text-xs text-gray-400">ID: {index + 1}</p>
                       </div>
                     </div>
                   </td>
