@@ -12,7 +12,7 @@ export default function Dashboard() {
   const stats = [
     {
       label: "Total Products",
-      value: products.length,
+      value: products.length > 0 ? products.length : "0",
       icon: "👗",
       color: "bg-blue-50",
     },
