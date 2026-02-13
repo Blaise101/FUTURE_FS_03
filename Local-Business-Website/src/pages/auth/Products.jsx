@@ -44,6 +44,7 @@ export default function Products() {
           initialData={currentProduct}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
+          isEditing={isEditing}
           title={currentProduct.id ? "Edit Product" : "Add New Product"}
         />
       )}

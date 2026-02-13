@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { useProduct } from "../../assets/contexts/ProductContext";
 
-export default function ProductForm({ initialData, onCancel, title }) {
-  const { addProduct } = useProduct();
+export default function ProductForm({
+  initialData,
+  onCancel,
+  title,
+  isEditing,
+}) {
+  const { addProduct, updateProduct } = useProduct();
   const [formData, setFormData] = useState(initialData);
   const [isLoading, setIsloading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsloading(true);
-    await addProduct(formData);
+    if (isEditing) {
+      await updateProduct(formData, initialData.id);
+    } else {
+      await addProduct(formData);
+    }
     setFormData(initialData);
     setIsloading(false);
     onCancel();
@@ -77,7 +86,6 @@ export default function ProductForm({ initialData, onCancel, title }) {
               <input
                 type="file"
                 accept="image/*"
-                required
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
