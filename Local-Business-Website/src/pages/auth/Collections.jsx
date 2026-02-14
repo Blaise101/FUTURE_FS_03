@@ -3,19 +3,31 @@ import { useCollection } from "../../assets/contexts/CollectionContext";
 import { ImStarEmpty } from "react-icons/im";
 
 export default function Collections() {
+  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const handleAddNew = () => {
     setCurrentCol({ name: "", description: "" });
     setIsEditing(true);
   };
   const [currentCol, setCurrentCol] = useState(null);
-  const { collections, deleteCollection, updateCollection } = useCollection();
-  const handleSubmit = () => {
-    updateCollection();
+  const { collections, deleteCollection, updateCollection, addCollection } =
+    useCollection();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    if (currentCol.id) {
+      await updateCollection(currentCol.id, currentCol);
+    } else {
+      await addCollection(currentCol);
+    }
+    setCurrentCol(null);
+    setIsLoading(false);
+    setIsEditing(false);
   };
   const setNewState = () => {
     setCurrentCol(null);
     setIsEditing(false);
+    setIsLoading(false);
   };
   const handleEdit = (col) => {
     setCurrentCol(col);
@@ -74,8 +86,23 @@ export default function Collections() {
               />
             </div>
             <div className="flex gap-4">
-              <button className="bg-[#C5A59E] text-white px-8 py-3 uppercase text-xs font-bold tracking-widest hover:bg-[#B4948E] transition-colors">
-                {currentCol.id ? "Save Changes" : "Create Collection"}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-[#C5A59E] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold hover:bg-[#B4948E] transition-colors"
+              >
+                {!isLoading ? (
+                  <>{currentCol.id ? "Save Changes" : "Create Collection"}</>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-[#e5c2ba] border-t-white rounded-full animate-spin" />
+                    <span>
+                      {currentCol.id
+                        ? "Saving Changes..."
+                        : "Createing Collection..."}
+                    </span>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -92,7 +119,7 @@ export default function Collections() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {collections.length > 0 ? (
           <>
-            {collections.map((col) => (
+            {collections.map((col, index) => (
               <div
                 key={col.id}
                 className="bg-white p-8 border border-gray-100 rounded-sm relative group shadow-sm hover:shadow-md transition-shadow"
@@ -103,7 +130,7 @@ export default function Collections() {
                 </p>
                 <div className="flex justify-between items-center pt-4 border-t border-gray-50">
                   <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                    ID: {col.id}
+                    ID: {index + 1}
                   </span>
                   <div className="flex gap-4">
                     <button

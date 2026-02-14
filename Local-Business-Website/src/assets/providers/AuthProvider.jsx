@@ -42,8 +42,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  console.log(token);
-
   useEffect(() => {
     if (!token) return;
 

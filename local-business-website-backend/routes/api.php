@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::group(['prefix' => 'collections'], function () {
     Route::get('/', [CollectionController::class, 'collections']);
     Route::post('/create', [CollectionController::class, 'createCollection']);
-    Route::post('/update', [CollectionController::class, 'updateCollection']);
+    Route::post('/update/{id}', [CollectionController::class, 'updateCollection']);
     Route::delete('/delete/{id}', [CollectionController::class, 'deleteCollection']);
   });
   Route::group(['prefix' => 'messages'], function () {

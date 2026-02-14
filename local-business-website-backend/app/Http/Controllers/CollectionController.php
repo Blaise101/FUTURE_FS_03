@@ -21,7 +21,7 @@ class CollectionController extends Controller
       'description' => 'required',
     ]);
     if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()], 422);
+      return response()->json(['errors' => $validator->errors(), $request->all()], 422);
     }
     $collection = new Collection();
     $collection->name = $request->input('name');

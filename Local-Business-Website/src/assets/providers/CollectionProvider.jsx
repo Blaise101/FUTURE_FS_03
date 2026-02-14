@@ -30,15 +30,18 @@ export const CollectionProvider = ({ children }) => {
     fetchCollection();
   }, [token]);
 
-  const addCollection = async (collection) => {
+  const addCollection = async (userInput) => {
     if (!token) return null;
+    const formDataObj = new FormData();
+    formDataObj.append("name", userInput.name);
+    formDataObj.append("description", userInput.description);
 
     const res = await fetch("http://localhost:8000/api/collections/create", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: collection,
+      body: formDataObj,
     });
 
     if (!res.ok) throw new Error("Failed to add product");
@@ -47,15 +50,46 @@ export const CollectionProvider = ({ children }) => {
     setCollections((prev) => [...prev, data.collection || data]);
   };
 
-  const updateCollection = (id, updates) => {
-    setCollections([
-      collections.map((c) => (c.id === id ? { ...c, ...updates } : c)),
-    ]);
+  const updateCollection = async (id, updates) => {
+    if (!token) return null;
+    const formDataObj = new FormData();
+    formDataObj.append("name", updates.name);
+    formDataObj.append("description", updates.description);
+
+    const res = await fetch(
+      `http://localhost:8000/api/collections/update/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formDataObj,
+      },
+    );
+
+    if (!res.ok) throw new Error("Failed to update product");
+
+    const data = await res.json();
+
+    setCollections((prev) =>
+      prev.map((collection) =>
+        collection.id === id ? data.collection || data : collection,
+      ),
+    );
   };
 
-  const deleteCollection = (id) => {
-    setCollections(collections.filter((c) => c.id !== id));
-    // setCollections([collections.map((c) => c.id !== id)]);
+  const deleteCollection = async (id) => {
+    if (!token) return;
+    const res = await fetch(
+      `http://localhost:8000/api/collections/delete/${id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    if (!res.ok) throw new Error("Failed to delete collection");
+    setCollections((prev) => prev.filter((collection) => collection.id !== id));
+    return;
   };
 
   return (
