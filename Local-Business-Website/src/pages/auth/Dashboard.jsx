@@ -1,13 +1,15 @@
 import { useAuth } from "../../assets/contexts/AuthContext";
-import { useContact } from "../../assets/contexts/ContactContext";
+import { useMessage } from "../../assets/contexts/MessageContext";
 import { useProduct } from "../../assets/contexts/ProductContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const { messages } = useContact();
+  const { messages } = useMessage();
   const { products } = useProduct();
-  const unreadMessages = messages.filter((message) => !message.read).length;
+  const unreadMessages = messages
+    ? messages.filter((message) => !message.read).length
+    : "0";
 
   const stats = [
     {

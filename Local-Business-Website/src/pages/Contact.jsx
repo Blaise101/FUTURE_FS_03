@@ -4,17 +4,17 @@ import { useContact } from "../assets/contexts/ContactContext";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
-  const [formState, setFormState] = useState({
-    name: "",
-    emai: "",
-    message: "",
-  });
+  const initialState = { name: "", email: "", message: "" };
+  const [formState, setFormState] = useState(initialState);
   const { addMessage } = useContact();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addMessage(formState);
+    await addMessage(formState);
     setSubmitted(true);
+    await new Promise((r) => setTimeout(r, 3000));
+    setSubmitted(false);
+    setFormState(initialState);
   };
 
   return (

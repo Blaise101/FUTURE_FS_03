@@ -78,9 +78,6 @@ export const ProductProvider = ({ children }) => {
         formDataObj.append("image", userInput.imageFile);
       }
 
-      // Debug properly
-      console.log([...formDataObj.entries()]);
-
       const res = await fetch(
         `http://localhost:8000/api/products/update/${id}`,
         {

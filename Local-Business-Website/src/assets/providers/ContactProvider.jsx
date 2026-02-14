@@ -1,32 +1,20 @@
-import React, { useState } from "react";
 import { ContactContext } from "../contexts/ContactContext";
 
 export const ContactProvider = ({ children }) => {
-  const [messages, setMessages] = useState([
-    {
-      id: "1",
-      name: "Jane Doe",
-      email: "jane@example.com",
-      message: "I love the new summer collection!",
-      timestamp: new Date().toLocaleString(),
-      read: false,
-    },
-  ]);
-
-  const addMessage = (message) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        ...message,
-        id: Date.now().toString(),
-        timestamp: new Date().toLocaleString(),
-        read: false,
-      },
-    ]);
+  const addMessage = async (userInput) => {
+    const formDataObj = new FormData();
+    formDataObj.append("name", userInput.name);
+    formDataObj.append("email", userInput.email);
+    formDataObj.append("message", userInput.message);
+    const res = await fetch("http://localhost:8000/api/messages/create", {
+      method: "POST",
+      body: formDataObj,
+    });
+    if (!res.ok) throw new Error("Failed to add product");
   };
 
   return (
-    <ContactContext.Provider value={{ messages, addMessage }}>
+    <ContactContext.Provider value={{ addMessage }}>
       {children}
     </ContactContext.Provider>
   );

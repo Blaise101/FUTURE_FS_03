@@ -1,77 +1,70 @@
-// import { useState } from "react";
-// import { MessageContext } from "../contexts/MessageContext";
-
-// export const MessageProvider = ({ childern }) => {
-//   const [messages, setMessages] = useState([
-
-//   ]);
-
-//   const addMessage = (message) => {
-//     setMessages([
-//       {
-//         ...message,
-//         id: Date.now().toString(),
-//         timestamp: new Date().toLocaleString(),
-//         read: false,
-//       },
-//       ...messages,
-//     ]);
-//   };
-
-//   return (
-//     <MessageContext.Provider value={{ messages, addMessage, markMessageRead }}>
-//       {childern}
-//     </MessageContext.Provider>
-//   );
-// };
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageContext } from "../contexts/MessageContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export const MessageProvider = ({ children }) => {
-  const [messages, setMessages] = useState([
-    {
-      id: "1",
-      name: "Jane Doe",
-      email: "jane@example.com",
-      message: "I love the new summer collection!",
-      timestamp: new Date().toLocaleString(),
-      read: false,
-    },
-    {
-      id: "2",
-      name: "John Smith",
-      email: "john@example.com",
-      message: "Do you offer international shipping?",
-      timestamp: new Date().toLocaleString(),
-      read: false,
-    },
-    {
-      id: "3",
-      name: "Sarah Johnson",
-      email: "sarah@example.com",
-      message: "Great quality products, highly recommend!",
-      timestamp: new Date().toLocaleString(),
-      read: false,
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
 
-  const markMessageRead = (id) => {
-    setMessages(
-      messages.map((message) =>
-        message.id === id ? { ...message, read: true } : message,
+  const { token, user } = useAuth();
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch("http://localhost:8000/api/messages", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch Messages");
+
+        const data = await res.json();
+        setMessages(data.messages);
+      } catch (err) {
+        console.error("Error fetching Messages:", err);
+      }
+    };
+
+    fetchMessages();
+  }, [token]);
+
+  const markAsRead = async (id) => {
+    if (!user) return;
+    const res = await fetch(
+      `http://localhost:8000/api/messages/markAsRead/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    if (!res.ok) throw new Error("Failed to update product");
+
+    const data = await res.json();
+
+    setMessages((prev) =>
+      prev.map((message) =>
+        message.id === id ? data.message || data : message,
       ),
     );
+
+    return data.message || data;
   };
 
-  const deleteMessage = (id) => {
-    setMessages(messages.filter((message) => message.id !== id));
+  const deleteMessage = async (id) => {
+    if (!user) return;
+    const res = await fetch(`http://localhost:8000/api/messages/delete/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error("Failed to delete message");
+    setMessages((prev) => prev.filter((message) => message.id !== id));
+    return;
   };
 
   return (
-    <MessageContext.Provider
-      value={{ messages, setMessages, markMessageRead, deleteMessage }}
-    >
+    <MessageContext.Provider value={{ messages, markAsRead, deleteMessage }}>
       {children}
     </MessageContext.Provider>
   );
