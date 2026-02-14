@@ -13,7 +13,7 @@ import Dashboard from "./pages/auth/Dashboard";
 import AdminLayout from "./AuthLayout";
 import Products from "./pages/auth/Products";
 import { ProductProvider } from "./assets/providers/ProductProvider";
-import Collections from "./pages/auth/Colletions";
+import Collections from "./pages/auth/Collections";
 import { CollectionProvider } from "./assets/providers/CollectionProvider";
 import Messages from "./pages/auth/Messages";
 import { MessageProvider } from "./assets/providers/MessageProvider";
