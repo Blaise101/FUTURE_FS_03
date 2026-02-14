@@ -7,7 +7,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::post("/login", [AuthController::class, 'login']);
-Route::post('/createMessage', [MessageController::class, 'createMessage']);
+Route::post('/messages/create', [MessageController::class, 'createMessage']);
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', [AuthController::class, 'user']);
   Route::post('/logout', [AuthController::class, 'logout']);

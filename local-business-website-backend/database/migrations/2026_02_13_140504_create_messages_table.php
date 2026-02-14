@@ -15,7 +15,6 @@ return new class extends Migration
       $table->uuid('id')->primary();
       $table->string('name');
       $table->string('email');
-      $table->string('subject');
       $table->longtext('message');
       $table->boolean('read')->default(false);
       $table->timestamps();

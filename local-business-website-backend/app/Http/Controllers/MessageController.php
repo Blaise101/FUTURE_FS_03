@@ -13,7 +13,6 @@ class MessageController extends Controller
     $validator = Validator::make($request->all(), [
       'name' => 'required',
       'email' => 'required',
-      'subject' => 'required',
       'message' => 'required',
     ]);
     if ($validator->fails()) {
@@ -22,7 +21,6 @@ class MessageController extends Controller
     Message::create([
       'name' => $request->input('name'),
       'email' => $request->input('email'),
-      'subject' => $request->input('subject'),
       'message' => $request->input('message'),
     ]);
     return response()->json(['success' => 'Message sent successfully'], 200);
@@ -31,7 +29,7 @@ class MessageController extends Controller
   public function getMessages()
   {
     $messages = Message::all();
-    return response()->json($messages, 200);
+    return response()->json(['messages' => $messages], 200);
   }
 
   public function markAsRead($id)
@@ -41,7 +39,7 @@ class MessageController extends Controller
       return response()->json(['error' => 'Message not found'], 404);
     }
     $message->update(['read' => true]);
-    return response()->json(['success' => 'Message marked as read'], 200);
+    return response()->json(['message' => $message], 200);
   }
 
   public function deleteMessage($id)
