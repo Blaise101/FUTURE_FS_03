@@ -6,7 +6,7 @@ import ProductDetails from "./components/home/partials/ProductDetails";
 import Shop from "./pages/Shop";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import { ContactProvider } from "./assets/providers/ContactProvider";
+import { NoAuthProvider } from "./assets/providers/NoAuthProvider";
 import { AuthProvider } from "./assets/providers/AuthProvider";
 import Login from "./pages/Login";
 import Dashboard from "./pages/auth/Dashboard";
@@ -30,7 +30,7 @@ const PublicLayout = ({ children }) => {
 
 export default function Layout() {
   return (
-    <ContactProvider>
+    <NoAuthProvider>
       <AuthProvider>
         <ProductProvider>
           <CollectionProvider>
@@ -108,6 +108,6 @@ export default function Layout() {
           </CollectionProvider>
         </ProductProvider>
       </AuthProvider>
-    </ContactProvider>
+    </NoAuthProvider>
   );
 }

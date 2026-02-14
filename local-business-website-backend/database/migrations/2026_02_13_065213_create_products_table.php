@@ -19,7 +19,7 @@ return new class extends Migration
       $table->string('description')->nullable();
       $table->longText('image');
       $table->string('category');
-      $table->boolean('featured')->default(false);
+      $table->boolean('featured')->default(true);
       $table->integer('stock_quantity')->default(0);
       $table->timestamps();
       $table->softDeletes();

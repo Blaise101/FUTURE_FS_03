@@ -46,6 +46,15 @@ class ProductController extends Controller
     return response()->json(['product' => $product], 200);
   }
 
+  public function getProduct($id)
+  {
+    $product = Product::find($id);
+    if (!$product) {
+      return response()->json(['message' => 'Product data not found'], 200);
+    }
+    return response()->json(['product' => $product], 200);
+  }
+
   public function updateProduct($id, Request $request)
   {
     $validate = Validator::make($request->all(), [

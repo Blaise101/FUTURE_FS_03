@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { products } from "../../assets/constants/products";
 import ProductCard from "./partials/ProductCard";
 import { useState } from "react";
 import ProductDetails from "./partials/ProductDetails";
+import { useNoAuth } from "../../assets/contexts/NoAuthContext";
 
 export default function FeaturedCollection() {
+  const { products } = useNoAuth();
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
   const featuredProducts = products.filter((p) => p.featured).slice(0, 3);

@@ -1,10 +1,11 @@
-import { products } from "../assets/constants/products";
 import { useState } from "react";
 import ProductCard from "../components/home/partials/ProductCard";
+import { useNoAuth } from "../assets/contexts/NoAuthContext";
 
 export default function Shop() {
   const categories = ["All", "Clothing", "Accessories", "Shoes"];
   const [activeCategory, setActiveCategory] = useState("All");
+  const { products } = useNoAuth();
 
   const filteredProducts =
     activeCategory === "All"

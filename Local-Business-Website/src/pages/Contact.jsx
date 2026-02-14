@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Map from "../components/contacts/Map";
-import { useContact } from "../assets/contexts/ContactContext";
+import { useNoAuth } from "../assets/contexts/NoAuthContext";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const initialState = { name: "", email: "", message: "" };
   const [formState, setFormState] = useState(initialState);
-  const { addMessage } = useContact();
+  const { addMessage } = useNoAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

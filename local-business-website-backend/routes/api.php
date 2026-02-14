@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/login", [AuthController::class, 'login']);
 Route::post('/messages/create', [MessageController::class, 'createMessage']);
+Route::get('/products', [ProductController::class, 'products']);
+Route::get('/products/{id}', [ProductController::class, 'getProduct']);
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', [AuthController::class, 'user']);
   Route::post('/logout', [AuthController::class, 'logout']);
   Route::group(["prefix" => "products"], function () {
-    Route::get('/', [ProductController::class, 'products']);
     Route::post('/create', [ProductController::class, 'createProduct']);
     Route::post('/update/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('/delete/{id}', [ProductController::class, 'deleteProduct']);

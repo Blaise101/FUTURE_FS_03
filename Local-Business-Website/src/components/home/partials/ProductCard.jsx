@@ -7,7 +7,7 @@ export default function ProductCard({ product }) {
     <div className="group relative">
       <div className="aspect-[3/4] overflow-hidden bg-gray-100 rounded-sm">
         <img
-          src={product.image}
+          src={`http://localhost:8000/${product.image}`}
           alt={product.name}
           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
