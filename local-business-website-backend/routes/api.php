@@ -6,6 +6,9 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+  return view('welcome');
+})->name('login');
 Route::post("/login", [AuthController::class, 'login']);
 Route::post('/messages/create', [MessageController::class, 'createMessage']);
 Route::get('/products', [ProductController::class, 'products']);
