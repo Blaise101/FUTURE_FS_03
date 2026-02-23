@@ -117,47 +117,33 @@ export default function Collections() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {collections.length > 0 ? (
-          <>
-            {collections.map((col, index) => (
-              <div
-                key={col.id}
-                className="bg-white p-8 border border-gray-100 rounded-sm relative group shadow-sm hover:shadow-md transition-shadow"
-              >
-                <h3 className="text-xl font-bold serif mb-4">{col.name}</h3>
-                <p className="text-gray-500 text-sm mb-8 font-light leading-relaxed">
-                  {col.description}
-                </p>
-                <div className="flex justify-between items-center pt-4 border-t border-gray-50">
-                  <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                    ID: {index + 1}
-                  </span>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => handleEdit(col)}
-                      className="text-blue-500 text-[10px] uppercase tracking-widest font-bold hover:underline"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (
-                          confirm(
-                            "Are you sure you want to delete this collection?",
-                          )
-                        )
-                          deleteCollection(col.id);
-                      }}
-                      className="text-red-500 text-[10px] uppercase tracking-widest font-bold hover:underline"
-                    >
-                      Delete
-                    </button>
-                  </div>
+        {collections === null ? (
+          // 🔄 LOADING STATE (Skeleton Cards)
+          [...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="bg-white p-8 border border-gray-100 rounded-sm shadow-sm animate-pulse"
+            >
+              <div className="h-5 w-40 bg-gray-200 rounded mb-4"></div>
+
+              <div className="space-y-2 mb-8">
+                <div className="h-3 w-full bg-gray-200 rounded"></div>
+                <div className="h-3 w-5/6 bg-gray-200 rounded"></div>
+                <div className="h-3 w-4/6 bg-gray-100 rounded"></div>
+              </div>
+
+              <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+                <div className="h-2 w-16 bg-gray-200 rounded"></div>
+
+                <div className="flex gap-4">
+                  <div className="h-3 w-10 bg-gray-200 rounded"></div>
+                  <div className="h-3 w-12 bg-gray-200 rounded"></div>
                 </div>
               </div>
-            ))}
-          </>
-        ) : (
+            </div>
+          ))
+        ) : collections.length === 0 ? (
+          // 📦 EMPTY STATE
           <div className="col-span-full flex items-center justify-center py-20">
             <div className="text-center">
               <IoFolderOpenOutline className="w-12 h-12 text-gray-300 mx-auto mb-4" />
@@ -169,6 +155,49 @@ export default function Collections() {
               </p>
             </div>
           </div>
+        ) : (
+          // ✅ DATA STATE
+          collections.map((col, index) => (
+            <div
+              key={col.id}
+              className="bg-white p-8 border border-gray-100 rounded-sm relative group shadow-sm hover:shadow-md transition-shadow"
+            >
+              <h3 className="text-xl font-bold serif mb-4">{col.name}</h3>
+
+              <p className="text-gray-500 text-sm mb-8 font-light leading-relaxed">
+                {col.description || "No description"}
+              </p>
+
+              <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                  ID: {index + 1}
+                </span>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => handleEdit(col)}
+                    className="text-blue-500 text-[10px] uppercase tracking-widest font-bold hover:underline"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (
+                        confirm(
+                          "Are you sure you want to delete this collection?",
+                        )
+                      )
+                        deleteCollection(col.id);
+                    }}
+                    className="text-red-500 text-[10px] uppercase tracking-widest font-bold hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
         )}
       </div>
     </div>

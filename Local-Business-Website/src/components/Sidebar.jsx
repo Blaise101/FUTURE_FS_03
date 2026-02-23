@@ -35,14 +35,22 @@ export default function Sidebar() {
       </div>
 
       <div className="p-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#C5A59E] flex items-center justify-center text-white font-bold">
-          {user?.name?.[0] || "A"}
-        </div>
+        {user ? (
+          <div className="w-10 h-10 rounded-full bg-[#C5A59E] flex items-center justify-center text-white font-bold">
+            {user.name[0]}
+          </div>
+        ) : (
+          <div className="h-10 w-10 bg-gradient-to-r from-gray-300 to-gray-100 rounded animate-pulse"></div>
+        )}
         <div className="overflow-hidden">
-          <p className="text-sm font-semibold truncate">
-            {user?.name || "Admin"}
-          </p>
-          <p className="text-xs text-gray-400 truncate">{user?.email}</p>
+          {user ? (
+            <>
+              <p className="text-sm font-semibold truncate">{user.name}</p>
+              <p className="text-xs text-gray-400 truncate">{user.email}</p>
+            </>
+          ) : (
+            <div className="h-10 bg-gradient-to-r from-gray-300 to-gray-100 rounded animate-pulse w-40"></div>
+          )}
         </div>
       </div>
 

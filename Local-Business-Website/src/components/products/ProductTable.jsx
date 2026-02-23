@@ -25,7 +25,74 @@ export default function ProductTable({ onEdit }) {
         </div>
       )}
       <div className="bg-white border border-gray-100 rounded-sm overflow-hidden shadow-sm">
-        {products.length > 0 ? (
+        {products === null ? (
+          // 🔄 LOADING STATE (Skeleton Table)
+          <table className="w-full text-left animate-pulse">
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th className="px-6 py-4">
+                  <div className="h-3 w-24 bg-gray-200 rounded"></div>
+                </th>
+                <th className="px-6 py-4">
+                  <div className="h-3 w-20 bg-gray-200 rounded"></div>
+                </th>
+                <th className="px-6 py-4">
+                  <div className="h-3 w-16 bg-gray-200 rounded"></div>
+                </th>
+                <th className="px-6 py-4 text-right">
+                  <div className="h-3 w-20 bg-gray-200 rounded ml-auto"></div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {[...Array(4)].map((_, i) => (
+                <tr
+                  key={i}
+                  className="border-b border-gray-50"
+                >
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-16 bg-gray-200 rounded-sm"></div>
+                      <div className="space-y-2">
+                        <div className="h-3 w-32 bg-gray-200 rounded"></div>
+                        <div className="h-2 w-16 bg-gray-100 rounded"></div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4">
+                    <div className="h-3 w-24 bg-gray-200 rounded"></div>
+                  </td>
+
+                  <td className="px-6 py-4">
+                    <div className="h-3 w-16 bg-gray-200 rounded"></div>
+                  </td>
+
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end gap-3">
+                      <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                      <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : products.length === 0 ? (
+          // 📦 EMPTY STATE
+          <div className="flex flex-col items-center justify-center py-16 px-6">
+            <div className="text-6xl mb-4">📦</div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              No Products Yet
+            </h3>
+            <p className="text-gray-500 text-center max-w-md">
+              Your product library is empty. Start by adding your first product
+              to get started.
+            </p>
+          </div>
+        ) : (
+          // ✅ DATA TABLE
           <table className="w-full text-left">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
@@ -43,6 +110,7 @@ export default function ProductTable({ onEdit }) {
                 </th>
               </tr>
             </thead>
+
             <tbody className="divide-y divide-gray-50">
               {products.map((product, index) => (
                 <tr
@@ -52,8 +120,12 @@ export default function ProductTable({ onEdit }) {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
                       <img
-                        src={`http://localhost:8000/${product.image}`}
-                        alt=""
+                        src={
+                          product.image
+                            ? `http://localhost:8000/${product.image}`
+                            : "/placeholder.png"
+                        }
+                        alt={product.name}
                         className="w-12 h-16 object-cover rounded-sm"
                       />
                       <div>
@@ -62,14 +134,17 @@ export default function ProductTable({ onEdit }) {
                       </div>
                     </div>
                   </td>
+
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {product.category}
+                    {product.category || "—"}
                   </td>
+
                   <td className="px-6 py-4 text-sm font-bold text-gray-900">
                     ${product.price}
                   </td>
+
                   <td className="px-6 py-4 text-right">
-                    <div className="flex justify-end gap-3 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={() => onEdit(product)}
                         className="p-2 text-blue-500 hover:bg-blue-50 rounded-sm"
@@ -77,6 +152,7 @@ export default function ProductTable({ onEdit }) {
                       >
                         ✏️
                       </button>
+
                       <button
                         onClick={() => handleDelete(product)}
                         className="p-2 text-red-500 hover:bg-red-50 rounded-sm"
@@ -90,17 +166,6 @@ export default function ProductTable({ onEdit }) {
               ))}
             </tbody>
           </table>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-16 px-6">
-            <div className="text-6xl mb-4">📦</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No Products Yet
-            </h3>
-            <p className="text-gray-500 text-center max-w-md">
-              Your product library is empty. Start by adding your first product
-              to get started.
-            </p>
-          </div>
         )}
       </div>
     </>

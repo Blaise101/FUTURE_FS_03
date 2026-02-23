@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export const CollectionProvider = ({ children }) => {
   const { token } = useAuth();
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState(null);
 
   useEffect(() => {
     const fetchCollection = async () => {

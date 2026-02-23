@@ -3,7 +3,7 @@ import { MessageContext } from "../contexts/MessageContext";
 import { useAuth } from "../contexts/AuthContext";
 
 export const MessageProvider = ({ children }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(null);
 
   const { token, user } = useAuth();
 

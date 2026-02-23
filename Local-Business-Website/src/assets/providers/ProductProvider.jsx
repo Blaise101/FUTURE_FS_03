@@ -3,7 +3,7 @@ import { ProductContext } from "../contexts/ProductContext";
 import { useAuth } from "../contexts/AuthContext";
 
 export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const { token } = useAuth();
 
   useEffect(() => {

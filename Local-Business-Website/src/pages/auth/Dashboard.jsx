@@ -9,12 +9,12 @@ export default function Dashboard() {
   const { products } = useProduct();
   const unreadMessages = messages
     ? messages.filter((message) => !message.read).length
-    : "0";
+    : null;
 
   const stats = [
     {
       label: "Total Products",
-      value: products.length > 0 ? products.length : "0",
+      value: products ? products.length : null,
       icon: "👗",
       color: "bg-blue-50",
     },
@@ -45,9 +45,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl font-bold serif">
-          Welcome back, {user?.name.split(" ")[0]}
-        </h1>
+        {user ? (
+          <h1 className="text-3xl font-bold serif">
+            Welcome back, {user.name.split(" ")[0]}
+          </h1>
+        ) : (
+          <div className="h-8 bg-gradient-to-r from-gray-300 to-gray-100 rounded animate-pulse mt-2 w-1/3"></div>
+        )}
+
         <p className="text-gray-500">
           Here's what's happening at Luna Thread today.
         </p>
@@ -64,7 +69,13 @@ export default function Dashboard() {
               <p className="text-xs text-gray-500 uppercase tracking-widest font-bold">
                 {stat.label}
               </p>
-              <p className="text-2xl font-bold">{stat.value}</p>
+              {stat.value ? (
+                <p className="text-3xl font-bold text-gray-900 mt-1">
+                  {stat.value}
+                </p>
+              ) : (
+                <div className="h-8 bg-gradient-to-r from-gray-200 to-gray-100 rounded animate-pulse mt-2 w-24"></div>
+              )}
             </div>
           </div>
         ))}

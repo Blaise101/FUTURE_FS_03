@@ -54,7 +54,6 @@ export default function ProductDetails() {
           {/* Image Section */}
           <div className="bg-gray-50 rounded-sm overflow-hidden">
             <img
-              // src={product.image}
               src={`http://localhost:8000/${product.image}`}
               alt={product.name}
               className="w-full h-full object-cover aspect-[4/5]"

@@ -1,10 +1,14 @@
 import { IoSkullOutline } from "react-icons/io5";
 import { useMessage } from "../../assets/contexts/MessageContext";
+import { useState } from "react";
 
 export default function DeleteMessage({ message, onCancel }) {
   const { deleteMessage } = useMessage();
-  const handleDelete = () => {
-    deleteMessage(message.id);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleDelete = async () => {
+    setIsLoading(true);
+    await deleteMessage(message.id);
+    setIsLoading(false);
     onCancel();
   };
 
@@ -39,10 +43,14 @@ export default function DeleteMessage({ message, onCancel }) {
               No, Go Back
             </button>
             <button
-              className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-red-700"
+              className={`${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+              } rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-red-700`}
               onClick={handleDelete}
             >
-              Yes, Delete {message.name}'s message'
+              {isLoading
+                ? "Deleting..."
+                : `Yes, Delete ${message.name}'s message`}
             </button>
           </div>
         </div>
