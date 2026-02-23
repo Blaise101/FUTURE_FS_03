@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaRegUser } from "react-icons/fa";
+import { useNoAuth } from "../assets/contexts/NoAuthContext";
 
 export default function Navbar() {
   const navLinks = [
@@ -10,13 +11,11 @@ export default function Navbar() {
     { name: "Contact", path: "/contact" },
   ];
 
-  const { token } = false;
-
   const location = useLocation();
   const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
-  const cartCount = 0;
+  const { cartCount } = useNoAuth();
 
   return (
     <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -49,9 +48,9 @@ export default function Navbar() {
             </div>
             <div className="flex items-center space-x-4 border-l border-gray-100 pl-8">
               <button
-                onClick={() => navigate(token ? "/admin/dashboard" : "/login")}
+                onClick={() => navigate("/login")}
                 className="p-2 text-gray-600 hover:text-[#C5A59E] transition-colors"
-                title={token ? "Admin Dashboard" : "Sign In"}
+                title={"Sign In"}
               >
                 <FaRegUser className="h-5 w-5" />
               </button>

@@ -131,7 +131,7 @@ export default function Login() {
           <p>
             Technical Issue?{" "}
             <a
-              href="mailto:support@lunathread.com"
+              href="mailto:blaise.izerimana@ashesi.edu.gh"
               className="text-[#C5A59E] hover:underline"
             >
               Contact Support

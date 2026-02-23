@@ -54,8 +54,6 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login error:", error);
       return false;
-    } finally {
-      console.log(token);
     }
   };
 

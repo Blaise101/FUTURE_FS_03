@@ -1,18 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { products } from "../../../assets/constants/products";
 import { IoIosArrowBack } from "react-icons/io";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
-// import { useCart } from "../../shop/context/CartContext.jsx";
+import { useNoAuth } from "../../../assets/contexts/NoAuthContext";
 
 export default function ProductDetails() {
+  const { products, addToCart, showNotification } = useNoAuth();
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState("M");
   const [quantity, setQuantity] = useState(0);
-  const handleAdd = () => {};
-  // const { showNotification } = useCart();
+  const handleAdd = () => {
+    addToCart({ id: product.id, quantity });
+    setQuantity(0);
+  };
 
   if (!product) {
     return (
@@ -29,14 +31,14 @@ export default function ProductDetails() {
   } else {
     return (
       <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* {showNotification && ( */}
-        <div className="fixed top-24 right-4 z-[100] bg-[#1A1A1A] text-white px-6 py-3 rounded-sm shadow-xl animate-bounce flex items-center gap-3">
-          <FaCheck className="w-4 h-4 text-[#C5A59E]" />
-          <span className="text-xs uppercase tracking-widest font-bold">
-            Added to Bag
-          </span>
-        </div>
-        {/* )} */}
+        {showNotification && (
+          <div className="fixed top-24 right-4 z-[100] bg-[#1A1A1A] text-white px-6 py-3 rounded-sm shadow-xl animate-bounce flex items-center gap-3">
+            <FaCheck className="w-4 h-4 text-[#C5A59E]" />
+            <span className="text-xs uppercase tracking-widest font-bold">
+              Added to Bag
+            </span>
+          </div>
+        )}
 
         <nav className="mb-8">
           <button
@@ -52,7 +54,8 @@ export default function ProductDetails() {
           {/* Image Section */}
           <div className="bg-gray-50 rounded-sm overflow-hidden">
             <img
-              src={product.image}
+              // src={product.image}
+              src={`http://localhost:8000/${product.image}`}
               alt={product.name}
               className="w-full h-full object-cover aspect-[4/5]"
             />

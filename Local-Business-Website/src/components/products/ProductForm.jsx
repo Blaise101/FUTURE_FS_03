@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { useProduct } from "../../assets/contexts/ProductContext";
 
-export default function ProductForm({
-  initialData,
-  onCancel,
-  title,
-  isEditing,
-}) {
+export default function ProductForm({ initialData, onCancel, title }) {
   const { addProduct, updateProduct } = useProduct();
   const [formData, setFormData] = useState(initialData);
   const [isLoading, setIsloading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsloading(true);
-    if (isEditing) {
+    if (initialData.id) {
       await updateProduct(formData, initialData.id);
     } else {
       await addProduct(formData);
